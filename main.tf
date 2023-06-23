@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "rg" {
   count    = 2
-  name     = "rg-leander"
+  name     = "rg-leander-${count.index}"
   location = var.location
   tags = {
     Environment  = "Test"
