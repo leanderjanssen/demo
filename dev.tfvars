@@ -1,1 +1,1 @@
-admin_password = "devpassword"
+admin_password = "default"
