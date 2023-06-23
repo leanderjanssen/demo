@@ -1,1 +1,1 @@
-admin_password = "verysecure"
+admin_password = "default"
