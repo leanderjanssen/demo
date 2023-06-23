@@ -1,12 +1,12 @@
 resource "azurerm_resource_group" "rg" {
-  count    = 2
+  count    = var.aantalrg
   name     = "rg-leander-${count.index}"
   location = var.location
   tags = {
     Environment  = "Test"
     Team         = "DevOps"
     Kostenplaats = "987654321"
-    Name         = "rg-leander-${count.index + 1}/${length(tostring(count.index))}"
+    Name         = "rg-leander-${count.index + 1}/${var.aantalrg}}"
   }
 }
 

@@ -1,3 +1,8 @@
+variable "aantalrg" {
+  type    = number
+  default = 9
+}
+
 variable "admin_username" {
   type        = string
   description = "Administrator user name for virtual machine."
