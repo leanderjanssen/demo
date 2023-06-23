@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "rg" {
   tags = {
     Environment  = "Test"
     Team         = "DevOps"
-    Kostenplaats = "1234567"
+    Kostenplaats = "12345678"
   }
 }
 
