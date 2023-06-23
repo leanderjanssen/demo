@@ -81,7 +81,7 @@ resource "azurerm_network_interface" "nic" {
 # Create a Linux virtual machine
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = "vm-leander"
-  location            = azurerm_resource_group.rg.location
+  location            = azurerm_resource_group.rg[0].location
   resource_group_name = azurerm_resource_group.rg[0].name
   size                = "Standard_F2"
   admin_username      = "sysop"
