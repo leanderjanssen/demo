@@ -2,18 +2,18 @@ resource "azurerm_resource_group" "rg" {
   name     = "rg-leander"
   location = var.location
   tags = {
-    Environment = "Test"
-    Team = "DevOps"
-    Kostenplaats = "1234"
+    Environment  = "Test"
+    Team         = "DevOps"
+    Kostenplaats = "12345"
   }
 }
 
 # Create a virtual network
 resource "azurerm_virtual_network" "vnet" {
-    name                = "vnet-leander"
-    address_space       = ["10.0.0.0/16"]
-    location            = var.location
-    resource_group_name = azurerm_resource_group.rg.name
+  name                = "vnet-leander"
+  address_space       = ["10.0.0.0/16"]
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
 }
 
 # Create subnet
@@ -53,9 +53,9 @@ resource "azurerm_network_security_group" "nsg" {
 
 # Create network interface
 resource "azurerm_network_interface" "nic" {
-  name                      = "nic-leander"
-  location                  = var.location
-  resource_group_name       = azurerm_resource_group.rg.name
+  name                = "nic-leander"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
     name                          = "nic-leander"
@@ -65,21 +65,35 @@ resource "azurerm_network_interface" "nic" {
   }
 }
 
+# resource "azurerm_network_interface" "nic2" {
+#   name                      = "nic-leander2"
+#   location                  = var.location
+#   resource_group_name       = azurerm_resource_group.rg.name
+
+#   ip_configuration {
+#     name                          = "nic-leander2"
+#     subnet_id                     = azurerm_subnet.subnet.id
+#     private_ip_address_allocation = "Dynamic"
+#   }
+# }
+
 # Create a Linux virtual machine
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                  = "vm-leander"
-  location              = azurerm_resource_group.rg.location
-  resource_group_name   = azurerm_resource_group.rg.name
-  size                  = "Standard_F2"
-  admin_username        = "sysop"
+  name                = "vm-leander"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  size                = "Standard_F2"
+  admin_username      = "sysop"
 
   network_interface_ids = [
     azurerm_network_interface.nic.id,
+    #azurerm_network_interface.nic2.id
   ]
 
   admin_ssh_key {
     username   = "sysop"
-    public_key = file("~/.ssh/id_rsa.pub")
+    #public_key = file("~/.ssh/id_rsa.pub")
+    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDYp7qdg8MMOr6pRPshLuXJsJPSXzJDOEvX620gcmo6yXt3wrIe0EjDY+syLcnZrMGu1ZNkiha9iEdMk+/4rObaXC++Yp0pkUK3MrS4To9duawv26ogXZvfWRQavJCio+loWNSYXS21vmpE0gwV4GFV9xA48z1bWvGjJjMj5RKJ0fpwGB//vxg9ij1qtgakhjqVjjR8T+n4YplqET+6FYJwR7KhYGGdprhwZyH1K3QPsmK/ZsfTs5tkwP4Y70I3vk2zX+wfcowy56PzxVhkSdVr0VN4CsH5tVv2cB7DHRJ70JQfKTeDI1CJOMe56Jz97XXMtirJmRmoHdyvbQ5jk9p"
   }
 
   os_disk {
@@ -98,5 +112,5 @@ resource "azurerm_linux_virtual_machine" "vm" {
 data "azurerm_public_ip" "ip" {
   name                = azurerm_public_ip.publicip.name
   resource_group_name = azurerm_linux_virtual_machine.vm.resource_group_name
-#  depends_on          = [azurerm_linux_virtual_machine.vm]
+  #  depends_on          = [azurerm_linux_virtual_machine.vm]
 }

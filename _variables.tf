@@ -7,7 +7,6 @@ variable "admin_username" {
 variable "admin_password" {
   type        = string
   description = "Password must meet Azure complexity requirements."
-  default     = "i83aSu4gIXmsIZVe3"
 }
 
 variable "location" {
