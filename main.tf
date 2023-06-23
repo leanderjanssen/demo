@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "rg" {
     Environment  = "Test"
     Team         = "DevOps"
     Kostenplaats = "987654321"
-    Name         = "rg-leander-${count.index + 1}/${len(count)}"
+    Name         = "rg-leander-${count.index + 1}/${lenght(count.index)}"
   }
 }
 
