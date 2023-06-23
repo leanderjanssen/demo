@@ -14,13 +14,13 @@ resource "azurerm_virtual_network" "vnet" {
   name                = "vnet-leander"
   address_space       = ["10.0.0.0/16"]
   location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = azurerm_resource_group.rg[0].name
 }
 
 # Create subnet
 resource "azurerm_subnet" "subnet" {
   name                 = "subnet-leander"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = azurerm_resource_group.rg[0].name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }
@@ -29,7 +29,7 @@ resource "azurerm_subnet" "subnet" {
 resource "azurerm_public_ip" "publicip" {
   name                = "public-leander"
   location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = azurerm_resource_group.rg[0].name
   allocation_method   = "Static"
 }
 
@@ -37,7 +37,7 @@ resource "azurerm_public_ip" "publicip" {
 resource "azurerm_network_security_group" "nsg" {
   name                = "sg-leander"
   location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = azurerm_resource_group.rg[0].name
 
   security_rule {
     name                       = "SSH"
@@ -56,7 +56,7 @@ resource "azurerm_network_security_group" "nsg" {
 resource "azurerm_network_interface" "nic" {
   name                = "nic-leander"
   location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = azurerm_resource_group.rg[0].name
 
   ip_configuration {
     name                          = "nic-leander"
@@ -82,7 +82,7 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = "vm-leander"
   location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = azurerm_resource_group.rg[0].name
   size                = "Standard_F2"
   admin_username      = "sysop"
 
