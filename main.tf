@@ -1,4 +1,5 @@
 resource "azurerm_resource_group" "rg" {
+  count    = 2
   name     = "rg-leander"
   location = var.location
   tags = {
